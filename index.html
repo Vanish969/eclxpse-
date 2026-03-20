@@ -7,6 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 <style>
 
@@ -94,24 +95,24 @@ text-align:center;
   left: -4px;
   right: -4px;
   bottom: -4px;
-  border-radius: 50%;
+  border-radius: 200%;
   background: conic-gradient(
       from 0deg,
-      #0e0e0e,    
-      #ffffff,    
-      #888888,    
+      #0e0e0e,
+      #ffffff,
+      #888888,
       #ffffff,
       #000000,
       #ffffff,
-      #cccccc,  
+      #000000,
       #ffffff,
-      #000000
+     #000000
   );
   background-size: 400% 400%;
   animation: borderAnimation 4s linear infinite;
   transition: transform 0.3s ease;
   z-index: 1;
-  filter: blur(8px); 
+  filter: blur(8px);
 }
 
 .profile {
@@ -131,35 +132,31 @@ text-align:center;
 }
 
 .username {
-  font-family: 'Montserrat', sans-serif; 
-  font-weight: 900;
-  font-size: 36px;
+  font-family: 'Inter',sans-serif;
+  font-weight: 700;
+  font-size: 34px;
   letter-spacing: 0px;
   text-transform: lowercase;
-  display: inline-block;
-  position: relative;
-  z-index: 1;
-
-  
-  background: linear-gradient(90deg, #ffffff 0%, #d9d9d9 50%, #ffffff 100%);
+  text-shadow: 0 0 10px #fff;
+  background: linear-gradient(90deg, #ffffff 0%, #d9d9d9 100%, #ffffff 50%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  
   animation: namePop 0.5s ease-out both, nameGradient 6s ease-in-out infinite;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes namePop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes nameGradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-@keyframes namePop {
-  0% { transform: scale(0.8); opacity: 0; }
-  80% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
 }
 
 .gif-row{
@@ -316,15 +313,10 @@ cursor:pointer;
 </div>
 
 
-<div class="cursor-dot" id="dot0"></div>
-<div class="cursor-dot" id="dot1"></div>
-<div class="cursor-dot" id="dot2"></div>
-<div class="cursor-dot" id="dot3"></div>
-<div class="cursor-dot" id="dot4"></div>
-<div class="cursor-dot" id="dot5"></div>
+
 
 <audio id="bgMusic" loop>
-<source src="eclxpse.mp3" type="audio/mpeg">
+<source src="mosthigh3.mp3" type="audio/mpeg">
 </audio>
 
 <div id="skidWarning">
@@ -344,11 +336,11 @@ startTypingLoop();
 }
 
 const backgrounds=[
-"https://i.imgur.com/xS1Xg3n.gif",
-"https://i.imgur.com/OcgCEMm.gif",
-"https://i.imgur.com/WJUUAaM.gif",
-"https://i.imgur.com/Wncdtdj.gif",
-"https://i.imgur.com/kVuerrt.gif"
+"https://i.imgur.com/wpuc1IZ.gif",
+"https://i.imgur.com/BQoin5V.gif",
+"https://i.imgur.com/OKTyoqh.gif",
+"https://i.imgur.com/V6YChF6.gif",
+"https://i.imgur.com/gu0umXC.gif"
 ];
 
 document.getElementById("bg").style.backgroundImage =
@@ -372,38 +364,10 @@ if(i>text.length){deleting=true;setTimeout(loop,1200);return;}
 el.textContent=text.substring(0,i--);
 if(i===0){deleting=false;}
 }
-setTimeout(loop,deleting?40:70);
+setTimeout(loop,deleting?50:90);
 }
 loop();
 }
-
-// CURSOR
-const dots=[], trailLength=6;
-for(let i=0;i<trailLength;i++){
-dots.push(document.getElementById("dot"+i));
-}
-
-let positions = Array(trailLength).fill({x:0,y:0});
-let mouseX=0, mouseY=0;
-
-document.addEventListener("mousemove", e=>{
-mouseX=e.clientX;
-mouseY=e.clientY;
-});
-
-function animateDots(){
-positions.unshift({x:mouseX,y:mouseY});
-positions.pop();
-
-dots.forEach((dot,i)=>{
-dot.style.left=positions[i].x+"px";
-dot.style.top=positions[i].y+"px";
-});
-
-requestAnimationFrame(animateDots);
-}
-
-animateDots();
 
 const warning=document.getElementById("skidWarning");
 
@@ -420,6 +384,74 @@ if(e.ctrlKey && e.shiftKey && e.key==="I"){e.preventDefault();showWarning();}
 if(e.ctrlKey && e.shiftKey && e.key==="J"){e.preventDefault();showWarning();}
 if(e.ctrlKey && e.key==="U"){e.preventDefault();showWarning();}
 });
+
+const canvas = document.getElementById("trailCanvas");
+const ctx = canvas.getContext("2d");
+
+let SCALE = window.devicePixelRatio || 1;
+
+function resizeCanvas(){
+canvas.width = window.innerWidth * SCALE;
+canvas.height = window.innerHeight * SCALE;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let trail = [];
+const maxTrail = 40;
+
+document.addEventListener("mousemove", e=>{
+trail.push({
+x: e.clientX * SCALE,
+y: e.clientY * SCALE,
+vx: (Math.random()-0.5)*1.5,
+vy: (Math.random()-0.5)*1.5,
+r: Math.random()*3+1,
+life: 1,
+decay: 0.02
+});
+});
+
+// ðŸ‘‰ FUNCTION MO
+function drawTrail() {
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.shadowColor = 'rgba(255,255,255,0.8)';
+ctx.shadowBlur = 6 * SCALE;
+
+let active = 0;
+
+for (const p of trail) {
+if (p.life <= 0) continue;
+
+active++;
+
+p.x += p.vx;
+p.y += p.vy;
+p.vy += 0.01;
+
+p.life -= p.decay;
+p.scale = Math.max(0, p.life);
+
+ctx.globalAlpha = p.life;
+ctx.fillStyle = '#ffffff';
+
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.r * p.scale, 0, Math.PI * 2);
+ctx.fill();
+
+if (active > maxTrail) break;
+}
+
+ctx.shadowBlur = 0;
+ctx.globalAlpha = 1;
+}
+
+function animateTrail(){
+drawTrail();
+requestAnimationFrame(animateTrail);
+}
+animateTrail();
 
 </script>
 
