@@ -103,7 +103,7 @@ body {
     animation: borderAnimation 4s linear infinite;
     transition: transform 0.3s ease;
     z-index: 1;
-    filter: blur(8px);
+    filter: blur(0px);
 }
 
 .profile-wrapper::after {
@@ -329,9 +329,9 @@ resizeDotsCanvas();
 window.addEventListener('resize', resizeDotsCanvas);
 
 const dots = [];
-const dotCount = 200;
+const dotCount = 100;
 for(let i=0; i<dotCount; i++){
-    dots.push({x:Math.random()*dotsCanvas.width, y:Math.random()*dotsCanvas.height, r:Math.random()*2+1, speed:Math.random()*1.5+0.5});
+    dots.push({x:Math.random()*dotsCanvas.width, y:Math.random()*dotsCanvas.height, r:Math.random()*2+1, speed:Math.random()*0.5+0.5});
 }
 
 function drawDots(){
