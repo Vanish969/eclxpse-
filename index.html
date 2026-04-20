@@ -411,7 +411,7 @@ function resizeCanvas(){ trailCanvas.width=window.innerWidth*SCALE; trailCanvas.
 resizeCanvas(); window.addEventListener("resize", resizeCanvas);
 
 let trail = [];
-const maxTrail = 40;
+const maxTrail = 100;
 document.addEventListener("mousemove", e=>{
     trail.push({x:e.clientX*SCALE, y:e.clientY*SCALE, vx:(Math.random()-0.5)*1.5, vy:(Math.random()-0.5)*1.5, r:Math.random()*3+1, life:1, decay:0.02});
 });
@@ -441,12 +441,6 @@ function drawTrail(){
 function animateTrail(){ drawTrail(); requestAnimationFrame(animateTrail); }
 animateTrail();
 
-// Cursor dot
-const cursor = document.getElementById("cursor");
-document.addEventListener("mousemove", e=>{
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-});
 
 // Toggle button
 const toggleBtn = document.getElementById("toggleBtn");
