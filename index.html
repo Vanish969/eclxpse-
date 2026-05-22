@@ -3,452 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>@eclxpse</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
-<link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
+<title>@eclipse</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    cursor: auto;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    height: 100vh;
-    overflow: hidden;
-    background: black;
-    color: white;
-    font-family: sans-serif;
-}
-
-.enter {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 30px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    backdrop-filter: blur(6px);
-    background: rgba(0,0,0,0.35);
-    cursor: pointer;
-    z-index: 100;
-    transition: 1.2s ease;
-}
-
-.enter.fade {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    filter: blur(1px) brightness(30%);
-    animation: zoom 25s infinite alternate ease-in-out;
-    z-index: -2;
-}
-
-@keyframes zoom {
-    from { transform: scale(1.05); }
-    to { transform: scale(1.2); }
-}
-
-.card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 1;
-}
-
-.profile-wrapper {
-    position: relative;
-    width: 135px;
-    height: 135px;
-    margin: 0 auto;
-}
-
-.profile-wrapper::before {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border-radius: 200%;
-    background: conic-gradient(from 0deg, 
-       #000000,
-#ffffff,
-#000000,
-#000000,
-#000000,
-#ffffff,
-#000000,
-#ffffff,
-#000000
-          );
-    background-size: 400% 400%;
-    animation: borderAnimation 4s linear infinite;
-    transition: transform 0.3s ease;
-    z-index: 1;
-    filter: blur(0px);
-}
-
-.profile-wrapper::after {
-    content: "";
-    position: absolute;
-    inset: -3px;
-    border-radius: 100%;
-    background: white;
-    filter: blur(0px);
-    z-index: 0;
-}
-
-.profile {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-    z-index: 2;
-}
-
-@keyframes borderAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.username {
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    margin-top: 20px;
-    font-size: 34px;
-    text-transform: lowercase;
-    background: linear-gradient(90deg, 
-    #ffffff 0%,
-    #d9d9d9 25%,
-    #888888 50%,
-    #ffffff 75%,
-    #000000 100%);
-    background-size: 300% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: namePop 0.5s ease-out both, nameGradient 3s linear infinite;
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0 0 6px rgba(255,255,255,0.25);
-}
-
-@keyframes namePop {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes nameGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.gif-row {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.gif-row img {
-    width: 45px;
-    height: 45px;
-    border-radius: 6px;
-}
-
-.bio {
-    margin-top: 12px;
-    font-family: 'Cutive Mono', monospace;
-    font-size: 16px;
-    white-space: nowrap;
-    overflow: hidden;
-    min-height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.revshit-text {
-    margin-top: 4px;
-    font-family: 'Playfair Display',serif;
-    font-size: 14px;
-    color: white;
-    opacity: 0.9;
-    text-align: center;
-}
-
-.socials {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-}
-
-.socials img {
-    width: 26px;
-}
-
-.visits {
-    margin-top: 20px;
-    font-size: 11px;
-    opacity: 0.4;
-}
-
-.cursor-dot {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: white;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    opacity: 0.8;
-    filter: drop-shadow(0 0 4px white);
-}
-
-#fallingDots {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-}
-
-#skidWarning {
-    position: fixed;
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    display: flex;
+body{
+    height:100vh;
+    display:flex;
     justify-content:center;
     align-items:center;
-    z-index:99999;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(25px);
-    display: none;
-}
-
-.skid-box {
-    text-align:center;
-    font-family:'Bebas Neue',sans-serif;
+    overflow:hidden;
+    font-family:Arial;
     color:white;
+    position:relative;
 }
 
-.skid-box h1 { letter-spacing:6px; font-size:32px; margin-bottom:10px; }
-.skid-box p { opacity:0.7; margin-bottom:20px; }
-.skid-box button { background:white;color:black;border:none;padding:10px 20px;border-radius:6px;font-family:'Bebas Neue',sans-serif; cursor:pointer; }
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:url('https://i.imgur.com/s4l3UdA.gif') center/cover no-repeat fixed;
+    filter:brightness(0.45);
+    z-index:-1;
+}
 
-.toggle-btn {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 99999;
-    cursor: pointer;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.card{
+    width:340px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 0 25px rgba(0,0,0,.35);
+    transition:transform 0.05s linear;
+}
+
+.avatar-wrapper{
+    position:relative;
+    width:90px;
+    height:90px;
+    margin:auto;
+}
+
+.avatar{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    position:absolute;
+    top:7px;
+    left:7px;
+}
+
+.decoration{
+    width:90px;
+    height:90px;
+    position:absolute;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+
+.status-dot{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    position:absolute;
+    bottom:10px;
+    right:12px;
+    border:3px solid #1b1b1b;
+}
+
+.online{background:#43b581;}
+.idle{background:#faa61a;}
+.dnd{background:#f04747;}
+.offline{background:#747f8d;}
+
+h2{
+    margin-top:15px;
+    font-size:26px;
+}
+
+.username{
+    color:#b9bbbe;
+    font-size:15px;
+    margin-top:3px;
+}
+
+.custom-status{
+    margin-top:12px;
+    color:#ddd;
+    font-size:14px;
+}
+
+.custom-status img{
+    width:20px;
+    height:20px;
+    vertical-align:middle;
+    margin-right:5px;
+}
+
+.activity{
+    margin-top:10px;
+    color:#999;
+    font-size:13px;
+}
+
+.bio{
+    margin-top:12px;
+    font-size:15px;
+    font-weight:bold;
+    color:white;
+    min-height:20px;
+}
+
+#typing::after{
+    content:'|';
+    animation:blink 0.7s infinite;
+}
+
+@keyframes blink{
+    50%{opacity:0;}
+}
+
+#gate{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    cursor:pointer;
+    transition:0.6s ease;
+}
+
+.gate-box{
+    text-align:center;
+    color:white;
+    font-family:Arial;
+}
+
+.gate-box h1{
+    font-size:22px;
+    letter-spacing:4px;
+}
+
+.socials{
+    margin-top:12px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+.socials a{
+    width:35px;
+    height:35px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:10px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+    color:white;
+    font-size:16px;
+    text-decoration:none;
+    transition:0.2s;
+}
+
+.socials a:hover{
+    transform:scale(1.1);
+    background:rgba(255,255,255,0.15);
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 </style>
 </head>
 <body>
 
-<canvas id="fallingDots"></canvas>
-<div class="toggle-btn" id="toggleBtn"></div>
-<div class="enter" onclick="enterSite()">swm</div>
-<div class="bg" id="bg"></div>
-
 <div class="card">
-    <div class="profile-wrapper">
-        <img src="https://i.imgur.com/DDsIDJU.jpeg" class="profile">
+    <div class="avatar-wrapper">
+        <img id="avatar" class="avatar">
+        <img id="decoration" class="decoration" style="display:none;">
+        <div id="statusDot" class="status-dot offline"></div>
     </div>
-    <div class="username">eclxpse</div>
-    <div class="gif-row">
-        <img src="https://cdn.discordapp.com/emojis/1181217742850891807.gif">
-<img src="https://cdn.discordapp.com/emojis/1441763213980074138.gif">
-<img src="https://cdn.discordapp.com/emojis/1197092976892059658.gif">
-    </div>
+
+    <h2 id="displayName"></h2>
+    <div class="username" id="username"></div>
+
     <div class="bio"><span id="typing"></span></div>
-    <div class="revshit-text">salem</div>
+
+    <div class="custom-status" id="customStatus">No custom status</div>
+    <div class="activity" id="activity"></div>
+
     <div class="socials">
-        <a href="https://open.spotify.com/user/31lvbj7ywf6kpxpicdowmv34amhe?si=oNaQlIzIRkOy3HwrT2Ejpw" target="_blank"><img src="https://cdn.simpleicons.org/spotify/ffffff"></a>
-        <a href="https://discord.com/users/1153336356345491547" target="_blank"><img src="https://cdn.simpleicons.org/discord/ffffff"></a>
-        <a href="https://www.instagram.com/menacexnt" target="_blank"><img src="https://cdn.simpleicons.org/instagram/ffffff"></a>
-        <a href="https://www.roblox.com/users/4675696526/profile" target="_blank"><img src="https://cdn.simpleicons.org/roblox/ffff"></a>
-</div>
-    <div class="visits">visitors: <span id="visitCount">0</span></div>
-</div>
-
-<audio id="bgMusic" loop>
-    <source src="eclxpse.mp3" type="audio/mpeg">
-</audio>
-
-<div id="skidWarning">
-    <div class="skid-box">
-        <h1>WAG SKID PLZZZZZ</h1>
-        <p>BAWAL TANGA RITO</p>
-        <button onclick="closeWarning()">TANGA AKO GETS KO</button>
+        <a href="https://instagram.com/menacexnt" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://tiktok.com/@menacexnt" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://discord.com/users/1153336356345491547" target="_blank"><i class="fa-brands fa-discord"></i></a>
     </div>
 </div>
 
-<div class="cursor-dot" id="cursor"></div>
-<canvas id="trailCanvas" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9998;"></canvas>
+<div id="gate" onclick="enterSite()">
+    <div class="gate-box">
+        <h1>doxx me</h1>
+        <audio id="bgmusic" src="vanishhhh.mp3"></audio>
+    </div>
+</div>
 
 <script>
-// Falling dots
-const dotsCanvas = document.getElementById('fallingDots');
-const dotsCtx = dotsCanvas.getContext('2d');
-function resizeDotsCanvas(){ dotsCanvas.width = window.innerWidth; dotsCanvas.height = window.innerHeight; }
-resizeDotsCanvas();
-window.addEventListener('resize', resizeDotsCanvas);
 
-const dots = [];
-const dotCount = 100;
-for(let i=0; i<dotCount; i++){
-    dots.push({x:Math.random()*dotsCanvas.width, y:Math.random()*dotsCanvas.height, r:Math.random()*2+1, speed:Math.random()*0.5+0.5});
-}
+const userId = "1153336356345491547";
 
-function drawDots(){
-    dotsCtx.clearRect(0,0,dotsCanvas.width,dotsCanvas.height);
-    dots.forEach(dot=>{
-        dotsCtx.beginPath();
-        dotsCtx.arc(dot.x, dot.y, dot.r, 0, Math.PI*2);
-        dotsCtx.fillStyle='rgba(255,255,255,0.9)';
-        dotsCtx.shadowColor='white';
-        dotsCtx.shadowBlur=6;
-        dotsCtx.fill();
-        dot.y += dot.speed;
-        if(dot.y > dotsCanvas.height){ dot.y=-dot.r; dot.x=Math.random()*dotsCanvas.width; }
-    });
-    requestAnimationFrame(drawDots);
-}
-drawDots();
+async function loadProfile(){
+    const res = await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
+    const json = await res.json();
+    const data = json.data;
+    const user = data.discord_user;
 
-// Enter Site
-function enterSite(){
-    document.querySelector(".enter").classList.add("fade");
-    document.getElementById("bgMusic").play().catch(()=>{});
-    startTypingLoop();
-}
+    document.getElementById("displayName").innerText =
+        user.display_name || user.global_name || user.username;
 
-// Backgrounds
-const backgrounds = [
-    "https://i.imgur.com/wpuc1IZ.gif",
-"https://i.imgur.com/BQoin5V.gif",
-"https://i.imgur.com/OKTyoqh.gif",
-"https://i.imgur.com/V6YChF6.gif",
-"https://i.imgur.com/gu0umXC.gif"
-];
-document.getElementById("bg").style.backgroundImage = `url(${backgrounds[Math.floor(Math.random()*backgrounds.length)]})`;
+    document.getElementById("username").innerText =
+        "@" + user.username;
 
-// Visits counter
-let visits = localStorage.getItem("visits");
-visits = visits ? Number(visits)+1 : 1;
-localStorage.setItem("visits", visits);
-document.getElementById("visitCount").innerText = visits;
+    document.getElementById("avatar").src =
+        `https://cdn.discordapp.com/avatars/${userId}/${user.avatar}.png?size=256`;
 
-// Typing loop
-function startTypingLoop(){
-    const text = "i love my baby ziyah";
-    const el = document.getElementById("typing");
-    let i=0, deleting=false;
-    function loop(){
-        if(!deleting){
-            el.textContent = text.substring(0,i++);
-            if(i > text.length){ deleting=true; setTimeout(loop,1200); return; }
-        } else {
-            el.textContent = text.substring(0,i--);
-            if(i===0) deleting=false;
+    const status = data.discord_status;
+    const dot = document.getElementById("statusDot");
+
+    dot.className =
+        "status-dot " +
+        (status === "online" ? "online" :
+        status === "idle" ? "idle" :
+        status === "dnd" ? "dnd" : "offline");
+
+    let customHTML = "No custom status";
+
+    if(data.activities){
+        const customActivity = data.activities.find(a => a.type === 4);
+
+        if(customActivity){
+            let emojiHTML = "";
+
+            if(customActivity.emoji){
+                if(customActivity.emoji.id){
+                    emojiHTML = `<img src="https://cdn.discordapp.com/emojis/${customActivity.emoji.id}.png">`;
+                } else {
+                    emojiHTML = `<span>${customActivity.emoji.name}</span>`;
+                }
+            }
+
+            customHTML = emojiHTML + (customActivity.state || "");
         }
-        setTimeout(loop, deleting?50:90);
     }
-    loop();
+
+    document.getElementById("customStatus").innerHTML = customHTML;
+
+    let activities = data.activities || [];
+    activities = activities.filter(a => a.type !== 4);
+
+    let activityText = "";
+
+    if(activities.length === 0){
+        activityText = "No activity";
+    } else {
+        activityText = activities.map(a => {
+            if(a.type === 0) return "Playing " + a.name;
+            if(a.type === 1) return "Streaming " + a.name;
+            if(a.type === 2) return "Listening to Spotify";
+            if(a.type === 3) return "Watching " + a.name;
+            return a.name;
+        }).join(" • ");
+    }
+
+    document.getElementById("activity").innerText = activityText;
+
+    if(user.avatar_decoration_data){
+        const deco = user.avatar_decoration_data.asset;
+        document.getElementById("decoration").src =
+        `https://cdn.discordapp.com/avatar-decoration-presets/${deco}.png?size=256`;
+        document.getElementById("decoration").style.display = "block";
+    }
 }
 
-// Skid warning
-const warning = document.getElementById("skidWarning");
-function showWarning(){ warning.style.display="flex"; }
-function closeWarning(){ warning.style.display="none"; }
-document.addEventListener("contextmenu", e=>{ e.preventDefault(); showWarning(); });
-let pressTimer;
-document.addEventListener("touchstart", ()=>{ pressTimer=setTimeout(showWarning,600); });
-document.addEventListener("touchend", ()=>{ clearTimeout(pressTimer); });
-document.addEventListener("keydown", e=>{
-    if(e.key==="F12" || (e.ctrlKey && e.shiftKey && (e.key==="I"||e.key==="J")) || (e.ctrlKey && e.key==="U")) { e.preventDefault(); showWarning(); }
-});
+let targetX = 0;
+let targetY = 0;
+let currentX = 0;
+let currentY = 0;
 
-// Cursor trail
-const trailCanvas = document.getElementById("trailCanvas");
-const ctx = trailCanvas.getContext("2d");
-let SCALE = window.devicePixelRatio || 1;
-function resizeCanvas(){ trailCanvas.width=window.innerWidth*SCALE; trailCanvas.height=window.innerHeight*SCALE; }
-resizeCanvas(); window.addEventListener("resize", resizeCanvas);
+const card = document.querySelector(".card");
 
-let trail = [];
-const maxTrail = 100;
-document.addEventListener("mousemove", e=>{
-    trail.push({x:e.clientX*SCALE, y:e.clientY*SCALE, vx:(Math.random()-0.5)*1.5, vy:(Math.random()-0.5)*1.5, r:Math.random()*3+1, life:1, decay:0.02});
-});
+document.addEventListener("click", function(e){
+    if(document.getElementById("gate").style.display === "none"){
+        let w = window.innerWidth / 2;
+        let h = window.innerHeight / 2;
 
-function drawTrail(){
-    ctx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
-    ctx.shadowColor='rgba(255,255,255,0.8)';
-    ctx.shadowBlur=6*SCALE;
-    let active=0;
-    for(const p of trail){
-        if(p.life<=0) continue;
-        active++;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.01;
-        p.life -= p.decay;
-        p.scale = Math.max(0, p.life);
-        ctx.globalAlpha = p.life;
-        ctx.fillStyle='#ffffff';
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r*p.scale, 0, Math.PI*2);
-        ctx.fill();
-        if(active>maxTrail) break;
+        let x = (e.clientX - w) / w;
+        let y = (e.clientY - h) / h;
+
+        targetX = y * -30;
+        targetY = x * 30;
     }
-    ctx.shadowBlur=0; ctx.globalAlpha=1;
-}
-function animateTrail(){ drawTrail(); requestAnimationFrame(animateTrail); }
-animateTrail();
-
-
-// Toggle button
-const toggleBtn = document.getElementById("toggleBtn");
-let darkMode = false;
-toggleBtn.addEventListener("click", ()=>{
-    darkMode = !darkMode;
-    dotsCanvas.style.background = darkMode ? 'rgba(0,0,0,1)' : 'transparent';
 });
+
+function animateCard(){
+    currentX += (targetX - currentX) * 0.15;
+    currentY += (targetY - currentY) * 0.15;
+
+    if(card){
+        card.style.transform =
+        `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+    }
+
+    requestAnimationFrame(animateCard);
+}
+
+animateCard();
+
+let started = false;
+
+function typeText(){
+    if(started) return;
+    started = true;
+
+    const text = "bitches luv me";
+    let i = 0;
+
+    function run(){
+        if(i < text.length){
+            document.getElementById("typing").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(run, 150);
+        }
+    }
+
+    run();
+}
+
+function enterSite(){
+    const gate = document.getElementById("gate");
+
+    gate.style.opacity = "0";
+
+    setTimeout(() => {
+        gate.style.display = "none";
+
+        const music = document.getElementById("bgmusic");
+        music.volume = 0.5;
+        music.play();
+
+        typeText();
+        loadProfile();
+    }, 600);
+}
+
+setInterval(loadProfile, 10000);
+
 </script>
 
 </body>
