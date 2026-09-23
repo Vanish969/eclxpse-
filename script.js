@@ -34,11 +34,46 @@ function updateDiscord(d) {
     const display = u.global_name || u.username;
 
     $("name").textContent = display;
-    $("handle").textContent = "@" + u.username;
-    document.title = display + " Profile";
+$("handle").textContent = "@" + u.username;
 
+const serverTag = $("server-tag");
+const serverTagIcon = $("server-tag-icon");
+const serverTagText = $("server-tag-text");
+
+const tag = u.primary_guild;
+
+if (serverTag && serverTagIcon && serverTagText) {
+
+    if (tag?.identity_enabled && tag?.tag) {
+
+        serverTagText.textContent = tag.tag;
+
+        if (tag.badge && tag.identity_guild_id) {
+            serverTagIcon.src =
+                `https://cdn.discordapp.com/clan-badges/${tag.identity_guild_id}/${tag.badge}.png?size=64`;
+
+            serverTagIcon.style.display = "block";
+        } else {
+            serverTagIcon.style.display = "none";
+        }
+
+        serverTag.style.display = "inline-flex";
+
+    } else {
+
+        serverTag.style.display = "none";
+        serverTagText.textContent = "";
+        serverTagIcon.src = "";
+
+    }
+}
     $("avatar").src = avatarUrl(u);
 
+const favicon = $("favicon");
+
+if (favicon) {
+    favicon.href = avatarUrl(u);
+}
     const dec = decorationUrl(u);
 
     $("avatar-decoration").style.display = dec ? "block" : "none";
@@ -52,6 +87,7 @@ function updateDiscord(d) {
         : "offline";
 
     $("status-dot").className = "status-dot " + status;
+    updateActivities(d.activities || []);
 }
 
 async function fetchLanyard() {
@@ -71,6 +107,205 @@ async function fetchLanyard() {
     } catch (error) {
         console.error("Lanyard error:", error);
     }
+}
+function updateActivities(activities) {
+
+    const container = $("activities");
+
+    if (!container) return;
+
+    const visible = activities.filter(activity => {
+
+        return activity.type !== 2;
+
+    });
+
+    if (!visible.length) {
+
+        container.innerHTML = `
+            <div class="activity-card">
+                <div class="activity-empty">
+                    NO ACTIVE ACTIVITY
+                </div>
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    visible.forEach(activity => {
+
+        const card = document.createElement("div");
+        card.className = "activity-card";
+
+        let type = "ACTIVITY";
+
+        if (activity.type === 0) {
+            type = "PLAYING";
+        }
+
+        if (activity.type === 1) {
+            type = "STREAMING";
+        }
+
+        if (activity.type === 3) {
+            type = "WATCHING";
+        }
+
+        if (activity.type === 5) {
+            type = "COMPETING";
+        }
+
+        let image = "";
+
+        if (activity.assets?.large_image) {
+
+    const large = activity.assets.large_image;
+
+    if (large.startsWith("mp:")) {
+
+        image =
+            "https://media.discordapp.net/" +
+            large.substring(3);
+
+    } else if (activity.application_id) {
+
+        image =
+            `https://cdn.discordapp.com/app-assets/${activity.application_id}/${large}.png`;
+
+    }
+
+}
+
+        if (!image && activity.application_id) {
+
+            image =
+                `https://cdn.discordapp.com/app-icons/${activity.application_id}/${activity.application_id}.png?size=128`;
+
+        }
+
+        const details = activity.details || "";
+        const state = activity.state || "";
+
+        let timestamp = "";
+
+        if (activity.timestamps?.start) {
+
+            const elapsed =
+                Math.floor((Date.now() - activity.timestamps.start) / 1000);
+
+            if (elapsed > 0) {
+
+                const hours = Math.floor(elapsed / 3600);
+                const minutes = Math.floor((elapsed % 3600) / 60);
+
+                if (hours > 0) {
+                    timestamp = `${hours}h ${minutes}m elapsed`;
+                } else {
+                    timestamp = `${minutes}m elapsed`;
+                }
+
+            }
+
+        }
+
+        card.innerHTML = `
+
+            <div class="activity-main">
+
+                ${
+                    image
+                    ? `<img class="activity-image" src="${image}" alt="">`
+                    : `<div class="activity-image"></div>`
+                }
+
+                <div class="activity-info">
+
+                    <div class="activity-type">
+                        • ${type}
+                    </div>
+
+                    <div class="activity-name">
+                        ${activity.name || "Unknown Activity"}
+                    </div>
+
+                    ${
+                        details
+                        ? `<div class="activity-details">${details}</div>`
+                        : ""
+                    }
+
+                    ${
+                        state
+                        ? `<div class="activity-state">${state}</div>`
+                        : ""
+                    }
+
+                    ${
+                        timestamp
+                        ? `<div class="activity-state">${timestamp}</div>`
+                        : ""
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+        if (activity.buttons?.length) {
+
+            const buttons = document.createElement("div");
+
+            buttons.className = "activity-buttons";
+
+            activity.buttons.forEach((button, index) => {
+
+                const url = activity.metadata?.button_urls?.[index];
+
+                if (!url) return;
+
+                const a = document.createElement("a");
+
+                a.className = "activity-button";
+                a.href = url;
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.textContent = button;
+
+                buttons.appendChild(a);
+
+            });
+
+            if (buttons.children.length) {
+                card.appendChild(buttons);
+            }
+
+        }
+
+        if (
+            activity.type === 1 &&
+            activity.url
+        ) {
+
+            const stream = document.createElement("a");
+
+            stream.className = "activity-stream";
+            stream.href = activity.url;
+            stream.target = "_blank";
+            stream.rel = "noopener noreferrer";
+            stream.textContent = "▶  Watch Stream";
+
+            card.appendChild(stream);
+
+        }
+
+        container.appendChild(card);
+
+    });
+
 }
 
 
