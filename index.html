@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>@eclipse</title>
+<link id="favicon" rel="icon" href="">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="page-loading">
@@ -20,7 +21,14 @@
 <span id="status-dot" class="status-dot"></span>
 </div>
 <div class="crown"></div>
-<h1 id="name"></h1>
+<div class="name-row">
+    <h1 id="name"></h1>
+
+    <span id="server-tag" class="server-tag">
+        <img id="server-tag-icon" class="server-tag-icon" alt="">
+        <span id="server-tag-text"></span>
+    </span>
+</div>
 <div class="handle" id="handle"></div>
 <div class="bio" id="bio"></div>
 <div class="socials">
@@ -80,6 +88,13 @@
 </div>
 
 <audio id="audio" src="assets/song.mp3" preload="metadata"></audio>
+<div class="activity-section" id="activity-section">
+
+    <div class="activity-heading">LIVE ACTIVITY</div>
+
+    <div id="activities"></div>
+
+</div>
 </div></main>
 
 <div class="enter-bottom"><div class="cross"></div></div>
