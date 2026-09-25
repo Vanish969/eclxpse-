@@ -168,9 +168,12 @@ function updateActivities(activities, spotify) {
     console.log("ACTIVITIES:", activities);
     console.log("SPOTIFY DATA:", spotify);
 
+
     /* ALL DISCORD ACTIVITIES */
 
-    activities.forEach(activity => {
+activities
+    .filter(activity => activity.type !== 2)
+    .forEach(activity => {
 
         const card = document.createElement("div");
         card.className = "activity-card";
@@ -450,7 +453,10 @@ if (activity.assets?.small_image) {
 
     /* NO ACTIVITY */
 
-    if (!activities.length && !spotify) {
+if (
+    !activities.some(activity => activity.type !== 2) &&
+    !spotify
+) {
 
         container.innerHTML = `
             <div class="activity-card">
