@@ -605,7 +605,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
             console.error("Audio playback error:", error);
 
-            alert("Unable to play the song. Please check the "assets/song.mp3" file.");
+            alert("Unable to play the song. Please check the assets/song.mp3 file.);
 
         }
 
