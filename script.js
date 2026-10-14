@@ -605,7 +605,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
             console.error("Audio playback error:", error);
 
-            alert("Hindi ma-play ang song. Check mo kung tama ang assets/song.mp3.");
+            alert("Unable to play the song. Please check the "assets/song.mp3" file.");
 
         }
 
